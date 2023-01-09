@@ -58,6 +58,24 @@ app.delete("/books/:id", (req, res) => {
   });
 });
 
+//to update we reference to books and need a specific id
+//so that we only delete the book we specifiy by id
+app.put("/books/:id", (req, res) => {
+  const bookId = req.params.id;
+  const q =
+    "UPDATE books SET `title` = ?, `description` = ?, `price` = ?, `cover` = ? WHERE id = ?";
+  const values = [
+    req.body.title,
+    req.body.description,
+    req.body.price,
+    req.body.cover,
+  ];
+  db.query(q, [...values, bookId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Book has been update.");
+  });
+});
+
 app.listen(8080, () => {
   console.log("Connected to backend, port 8080!");
 });
