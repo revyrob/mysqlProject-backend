@@ -42,7 +42,19 @@ app.post("/books", (req, res) => {
   ];
   db.query(q, [values], (err, data) => {
     if (err) return res.json(err);
-    return res.json("Book has been created");
+    return res.json("Book has been created.");
+  });
+});
+
+//to delete we reference to books and need a specific id
+//so that we only delete the book we specifiy by id
+app.delete("/books/:id", (req, res) => {
+  const bookId = req.params.id;
+  const q = "DELETE FROM books WHERE id = ?";
+
+  db.query(q, [bookId], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Book has been deleted.");
   });
 });
 
